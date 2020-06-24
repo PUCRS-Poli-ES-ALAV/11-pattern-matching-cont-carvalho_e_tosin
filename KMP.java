@@ -42,7 +42,9 @@ public class KMP {
     millisEnd = System.currentTimeMillis();
     total = millisEnd - millis;
     System.out.println("TEMPO: " + total);
-    System.out.println("COUNT: " + count + "\n");
+    System.out.println("INTERACAO: " + count + "\n");
+    System.out.println("INSTRUCAO: 63");
+
     count = 0;
 
     System.out.println("");
@@ -51,122 +53,124 @@ public class KMP {
     System.out.println("Resultado Grupo: " + grupo(s2, s1));
     millisEnd = System.currentTimeMillis();
     total = millisEnd - millis;
-    System.out.println("TEMPO: " + total);
-    System.out.println("COUNT: " + count + "\n");
+    System.out.println("INTERACAO: " + count + "\n");
+    System.out.println("INSTRUCAO: 59");
     count = 0;
   }
 
   public static int KMPSearch(String pat, String txt) {
-		int M = pat.length(); 
-		int N = txt.length(); 
+		int M = pat.length(); //4 >>>>
+		int N = txt.length(); //4 >>>>
 
 		// cria lps[] que vai guardar o maior 
 		// valor prefixo sufixo para o padrão 
-		int lps[] = new int[M]; 
-		int j = 0; // index for pat[] 
+		int lps[] = new int[M]; //3 >>>>
+		int j = 0; // index for pat[] //2 >>>>
 
 		// Calcula lps[] 
 		computeLPSArray(pat, M, lps);
 
-        int i = 0; // index for txt[]
-        while (i < N) {
+        int i = 0; // index for txt[] //3 >>>>
+        while (i < N) { //1 >>>>
           count++; //<<<<<<
-          if (pat.charAt(j) == txt.charAt(i)) {
-            j++;
-            i++;
+          if (pat.charAt(j) == txt.charAt(i)) { //5 >>>>
+            j++; //1 >>>>
+            i++; //1 >>>>
           }
-          if (j == M) {
+          if (j == M) { //1 >>>>
             System.out.println("Found pattern " + "at index " + (i - j));
-            j = lps[j - 1];
-            return i; // ocorrência? colisão?
+            j = lps[j - 1]; //2 >>>>
+            return i; // ocorrência? colisão? //1 >>>>
           }
 
           // mismatch após j matches
-          else if (i < N && pat.charAt(j) != txt.charAt(i)) {
+          else if (i < N && pat.charAt(j) != txt.charAt(i)) { //6 >>>>
             // Não faz match dos caracteres lps[0..lps[j-1]],
             // não é necesssário, eles combinarão
-            if (j != 0)
-              j = lps[j - 1];
+            if (j != 0) //1 >>>>
+              j = lps[j - 1]; //2 >>>>
             else
-              i = i + 1;
+              i = i + 1; //2 >>>>
           }
         }
-        return N; // nenhuma ocorrência
+        return N; // nenhuma ocorrência //1 >>>>
       }
+      //40
 
     public static void computeLPSArray(String pat, int M, int lps[]) {
 		// tamanho do maior prefixo sufixo anterior 
-		int len = 0; 
-		int i = 1; 
-		lps[0] = 0; // lps[0] is always 0 
+		int len = 0; //2 >>>>
+		int i = 1; //2 >>>>
+		lps[0] = 0; // lps[0] is always 0 //2 >>>>
 
 		// loop calcula lps[i] for i = 1 to M-1 
-		while (i < M) { 
+		while (i < M) { //1 >>>>
       count++; //<<<<<<
-			if (pat.charAt(i) == pat.charAt(len)) { 
-				len++; 
-				lps[i] = len; 
-				i++; 
+			if (pat.charAt(i) == pat.charAt(len)) { //5 >>>>
+				len++; //1 >>>>
+				lps[i] = len; //1 >>>>
+				i++; //2 >>>>
 			} 
 			else // (pat[i] != pat[len]) 
 			{ 
-				if (len != 0) { 
-					len = lps[len - 1]; 
+				if (len != 0) { //1 >>>>
+					len = lps[len - 1]; //2 >>>>
 				} 
-				else // if (len == 0) 
+				else // if (len == 0) //1 >>>>
 				{ 
-					lps[i] = len; 
-					i++; 
+					lps[i] = len; //2 >>>>
+					i++; //2 >>>>
 				} 
 			} 
 		} 
-	} 
+  } 
+  // 23
 
   private static int grupo(String s2, String s1) {
-    int N = s1.length();
+    int N = s1.length(); //4 >>>>
     System.out.println("N: " + N);
 
-    String aux = "";
-    int contador = 0;
+    String aux = ""; //2 >>>>
+    int contador = 0; //2 >>>>
 
-    int x;
-    int y;
+    int x; //1 >>>>
+    int y; //1 >>>>
 
-    for (int i = 0; i < s1.length(); i++) {
+    for (int i = 0; i < s1.length(); i++) { //7 >>>>
       count++; //<<<<<<
 
-      for (int j = 0; j < s2.length(); j++) {
+      for (int j = 0; j < s2.length(); j++) { //7 >>>>
         count++; //<<<<<<
-        if (s1.charAt(i) == s2.charAt(j)) {
+        if (s1.charAt(i) == s2.charAt(j)) { //5 >>>>
 
-          x = i;
-          y = j;
+          x = i; //1 >>>>
+          y = j; //1 >>>>
 
-          while (s1.charAt(x) == s2.charAt(y)) {
+          while (s1.charAt(x) == s2.charAt(y)) { //5 >>>>
             count++; //<<<<<<
-            aux += Character.toString(s2.charAt(y));
-            if (aux.equals(s2)) {
+            aux += Character.toString(s2.charAt(y)); //6 >>>>
+            if (aux.equals(s2)) { //3 >>>>
               System.out.println("houve ocorrência ou colisão");
-              return contador;
+              return contador; //1 >>>>
             }
-            x += 1;
-            y += 1;
+            x += 1; //2 >>>>
+            y += 1; //2 >>>>
           }
 
-          aux = "";
+          aux = ""; //1 >>>>
 
-        } else {
-          break;
+        } else { //1 >>>>
+          break; //1 >>>>
         }
 
       }
 
-      if (aux.equals(s2)) {
-        break;
+      if (aux.equals(s2)) { //2 >>>>
+        break; //1 >>>>
       }
-      contador++;
+      contador++; //2 >>>>
     }
-	  return contador;
+	  return contador; //1 >>>>
 
   }
 
